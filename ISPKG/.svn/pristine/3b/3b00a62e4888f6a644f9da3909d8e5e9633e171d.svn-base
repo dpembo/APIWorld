@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webMethodsTestSuite description="police force data test " name="Police force data">
+    <webMethodsTestCase description="call public get force details with force id supplied&#xd;&#xa;" name="pub:getForceDetails -force id supplied">
+        <service folder="com.softwareag.police.data.pub" name="getForceDetail">
+            <input>
+                <file filename="resources/test/data/pub.getForceDetail-Positive.xml"/>
+            </input>
+            <expected>
+                <file/>
+                <field operator="==" path="/forceDetail/name" value="Derbyshire Constabulary"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+    <webMethodsTestCase description="no force id supplied" name="pub:getForceDeails - no force id supplied">
+        <service folder="com.softwareag.police.data.pub" name="getForceDetail">
+            <input>
+                <file/>
+            </input>
+            <expected>
+                <exception class="com.wm.app.b2b.client.ServiceException" message="[ISC.0049.9005] Input validation for service 'com.softwareag.police.data.pub:getForceDetail' failed: '/forceId VV-005 [ISC.0082.9034] Field is absent, field must exist'"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+    <webMethodsTestCase name="pub:getForceDetail - incorrect force id supplied">
+        <service folder="com.softwareag.police.data.pub" name="getForceDetail">
+            <input>
+                <file filename="resources/test/data/pub.getForceDetail-Negative.xml"/>
+            </input>
+            <expected>
+                <exception class="com.wm.lang.flow.FlowException" message="Error getting Force Detail"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+    <webMethodsTestCase name="pub:getAllForcesInformation">
+        <mock folder="com.softwareag.police.data.impl" name="getForcesList">
+            <pipeline filename="resources/test/data/mock-forcesList.xml"/>
+        </mock>
+        <mock folder="com.softwareag.police.data.impl" name="getForceDetail">
+            <pipeline filename="resources/test/data/mock-forcesDetail.xml"/>
+        </mock>
+        <service folder="com.softwareag.police.data.pub" name="getAllForcesInformation">
+            <input>
+                <file/>
+            </input>
+            <expected>
+                <file/>
+                <field operator=">" path="count(forcesDetail)" value="0"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+    <webMethodsTestCase name="map:mapForceResponseToCanonical">
+        <service folder="com.softwareag.police.data.impl.map" name="mapForceResponseToCanonical">
+            <input>
+                <file filename="resources/test/data/forcesResponseData.xml"/>
+            </input>
+            <expected>
+                <file filename="resources/test/data/forceDetailCanonicalData.xml"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+    <webMethodsTestCase name="map:mapListResponseToCanonical">
+        <service folder="com.softwareag.police.data.impl.map" name="mapListResponseToCanonicalList">
+            <input>
+                <file filename="resources/test/data/listResponseData.xml"/>
+            </input>
+            <expected>
+                <file filename="resources/test/data/forceDetailListResponse"/>
+            </expected>
+        </service>
+    </webMethodsTestCase>
+</webMethodsTestSuite>

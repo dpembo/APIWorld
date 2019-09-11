@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="node_type">restDescriptor</value>
+  <value name="node_subtype">restv2Descriptor</value>
+  <value name="node_nsName">com.softwareag.police.data.pub:rstDescriptor</value>
+  <value name="node_pkg">SAGPoliceForceData</value>
+  <value name="is_public">false</value>
+  <record name="generalInfo" javaclass="com.wm.util.Values">
+    <value name="specVersion">2.0</value>
+    <value name="hostName">MCUKDXP05.eur.ad.sag:5555</value>
+    <value name="basePath">/rad/com.softwareag.police.data.pub:rstDescriptor</value>
+    <array name="schemes" type="value" depth="1">
+      <value>http</value>
+    </array>
+    <array name="consumes" type="value" depth="1">
+      <value>application/json</value>
+    </array>
+    <array name="produces" type="value" depth="1">
+      <value>application/json</value>
+    </array>
+  </record>
+  <record name="appInfo" javaclass="com.wm.util.Values">
+    <value name="appVersion">1.0</value>
+    <value name="description">SAG Police Force Data</value>
+    <value name="title">SAG Police Force Data</value>
+    <null name="termsOfService"/>
+    <record name="contact" javaclass="com.wm.util.Values">
+      <null name="contactName"/>
+      <null name="contactUrl"/>
+      <null name="contactEmail"/>
+    </record>
+    <record name="license" javaclass="com.wm.util.Values">
+      <null name="licenseName"/>
+      <null name="licenseUrl"/>
+    </record>
+  </record>
+  <null name="sourceUri"/>
+  <null name="swaggerUrl"/>
+  <Boolean name="modifiable">true</Boolean>
+  <record name="restResources" javaclass="com.wm.util.Values">
+    <record name="/getForceDetail" javaclass="com.wm.util.Values">
+      <value name="nsName">com.softwareag.police.data.pub:rst</value>
+      <value name="path">/getForceDetail</value>
+      <null name="suffix"/>
+      <record name="operations" javaclass="com.wm.util.Values">
+        <record name="GET" javaclass="com.wm.util.Values">
+          <value name="operationType">GET</value>
+          <value name="nsName">/getForceDetail_GET</value>
+          <value name="description">Gets infromation about an individual police force
+</value>
+          <array name="requiredDefinitions" type="value" depth="1">
+            <value>com.softwareag.police.data.pub.docs:ForceDetail</value>
+            <value>/getForceDetail_GET_$response</value>
+          </array>
+          <record name="parameters" javaclass="com.wm.util.Values">
+            <record name="forceId" javaclass="com.wm.util.Values">
+              <value name="name">forceId</value>
+              <value name="source">FORMDATA</value>
+              <value name="type">STRING</value>
+              <value name="description">ID of force, e.g. derbyshire, wiltshire, staffordshire</value>
+              <Boolean name="isRequired">true</Boolean>
+              <Boolean name="isArray">false</Boolean>
+              <null name="defaultValue"/>
+              <null name="refDefinition"/>
+              <null name="definitionName"/>
+              <Boolean name="includeInRad">true</Boolean>
+            </record>
+          </record>
+          <record name="responseParam" javaclass="com.wm.util.Values">
+            <value name="name">reseponse</value>
+            <value name="source">BODY</value>
+            <value name="type">REFERENCE</value>
+            <null name="description"/>
+            <Boolean name="isRequired">true</Boolean>
+            <Boolean name="isArray">false</Boolean>
+            <null name="defaultValue"/>
+            <value name="refDefinition">/getForceDetail_GET_$response</value>
+            <null name="definitionName"/>
+            <Boolean name="includeInRad">true</Boolean>
+          </record>
+          <record name="responses" javaclass="com.wm.util.Values">
+            <record name="200" javaclass="com.wm.util.Values">
+              <value name="statusCode">200</value>
+              <value name="description">OK</value>
+              <Boolean name="returnOutput">true</Boolean>
+            </record>
+            <record name="401" javaclass="com.wm.util.Values">
+              <value name="statusCode">401</value>
+              <value name="description">Access Denied</value>
+              <Boolean name="returnOutput">false</Boolean>
+            </record>
+          </record>
+        </record>
+      </record>
+    </record>
+    <record name="/getAllForcesInformation" javaclass="com.wm.util.Values">
+      <value name="nsName">com.softwareag.police.data.pub:rst</value>
+      <value name="path">/getAllForcesInformation</value>
+      <null name="suffix"/>
+      <record name="operations" javaclass="com.wm.util.Values">
+        <record name="GET" javaclass="com.wm.util.Values">
+          <value name="operationType">GET</value>
+          <value name="nsName">/getAllForcesInformation_GET</value>
+          <value name="description">-------------
+v1.0
+-------------
+Gets a complete list of UK Police forces from the forces api including:
+- id
+- name
+- telephone number
+- description</value>
+          <array name="requiredDefinitions" type="value" depth="1">
+            <value>com.softwareag.police.data.pub.docs:ForceDetail</value>
+            <value>/getAllForcesInformation_GET_$response</value>
+          </array>
+          <record name="responseParam" javaclass="com.wm.util.Values">
+            <value name="name">reseponse</value>
+            <value name="source">BODY</value>
+            <value name="type">REFERENCE</value>
+            <null name="description"/>
+            <Boolean name="isRequired">true</Boolean>
+            <Boolean name="isArray">false</Boolean>
+            <null name="defaultValue"/>
+            <value name="refDefinition">/getAllForcesInformation_GET_$response</value>
+            <null name="definitionName"/>
+            <Boolean name="includeInRad">true</Boolean>
+          </record>
+          <record name="responses" javaclass="com.wm.util.Values">
+            <record name="200" javaclass="com.wm.util.Values">
+              <value name="statusCode">200</value>
+              <value name="description">OK</value>
+              <Boolean name="returnOutput">true</Boolean>
+            </record>
+            <record name="401" javaclass="com.wm.util.Values">
+              <value name="statusCode">401</value>
+              <value name="description">Access Denied</value>
+              <Boolean name="returnOutput">false</Boolean>
+            </record>
+          </record>
+        </record>
+      </record>
+    </record>
+    <record name="/addNumbers" javaclass="com.wm.util.Values">
+      <value name="nsName">com.softwareag.police.data.pub:rst</value>
+      <value name="path">/addNumbers</value>
+      <null name="suffix"/>
+      <record name="operations" javaclass="com.wm.util.Values">
+        <record name="GET" javaclass="com.wm.util.Values">
+          <value name="operationType">GET</value>
+          <value name="nsName">/addNumbers_GET</value>
+          <value name="description"></value>
+          <array name="requiredDefinitions" type="value" depth="1">
+            <value>/addNumbers_GET_$response</value>
+          </array>
+          <record name="parameters" javaclass="com.wm.util.Values">
+            <record name="num1" javaclass="com.wm.util.Values">
+              <value name="name">num1</value>
+              <value name="source">FORMDATA</value>
+              <value name="type">STRING</value>
+              <value name="description"></value>
+              <Boolean name="isRequired">true</Boolean>
+              <Boolean name="isArray">false</Boolean>
+              <null name="defaultValue"/>
+              <null name="refDefinition"/>
+              <null name="definitionName"/>
+              <Boolean name="includeInRad">true</Boolean>
+            </record>
+            <record name="num2" javaclass="com.wm.util.Values">
+              <value name="name">num2</value>
+              <value name="source">FORMDATA</value>
+              <value name="type">STRING</value>
+              <value name="description"></value>
+              <Boolean name="isRequired">true</Boolean>
+              <Boolean name="isArray">false</Boolean>
+              <null name="defaultValue"/>
+              <null name="refDefinition"/>
+              <null name="definitionName"/>
+              <Boolean name="includeInRad">true</Boolean>
+            </record>
+          </record>
+          <record name="responseParam" javaclass="com.wm.util.Values">
+            <value name="name">reseponse</value>
+            <value name="source">BODY</value>
+            <value name="type">REFERENCE</value>
+            <null name="description"/>
+            <Boolean name="isRequired">true</Boolean>
+            <Boolean name="isArray">false</Boolean>
+            <null name="defaultValue"/>
+            <value name="refDefinition">/addNumbers_GET_$response</value>
+            <null name="definitionName"/>
+            <Boolean name="includeInRad">true</Boolean>
+          </record>
+          <record name="responses" javaclass="com.wm.util.Values">
+            <record name="200" javaclass="com.wm.util.Values">
+              <value name="statusCode">200</value>
+              <value name="description">OK</value>
+              <Boolean name="returnOutput">true</Boolean>
+            </record>
+            <record name="401" javaclass="com.wm.util.Values">
+              <value name="statusCode">401</value>
+              <value name="description">Access Denied</value>
+              <Boolean name="returnOutput">false</Boolean>
+            </record>
+          </record>
+        </record>
+      </record>
+    </record>
+  </record>
+  <record name="restDefinitions" javaclass="com.wm.util.Values">
+    <record name="com.softwareag.police.data.pub.docs:ForceDetail" javaclass="com.wm.util.Values">
+      <value name="name">ForceDetail</value>
+      <value name="nsName">com.softwareag.police.data.pub.docs:ForceDetail</value>
+      <Boolean name="autoGenerated">false</Boolean>
+      <Boolean name="recursive">false</Boolean>
+      <value name="description">Detail of force</value>
+    </record>
+    <record name="/getAllForcesInformation_GET_$response" javaclass="com.wm.util.Values">
+      <value name="name">getAllForcesInformation_GET_response</value>
+      <value name="nsName">/getAllForcesInformation_GET_$response</value>
+      <Boolean name="autoGenerated">true</Boolean>
+      <Boolean name="recursive">false</Boolean>
+      <null name="description"/>
+      <record name="parameters" javaclass="com.wm.util.Values">
+        <record name="forcesDetail" javaclass="com.wm.util.Values">
+          <value name="name">forcesDetail</value>
+          <value name="source">BODY</value>
+          <value name="type">REFERENCE</value>
+          <value name="description"></value>
+          <Boolean name="isRequired">true</Boolean>
+          <Boolean name="isArray">true</Boolean>
+          <null name="defaultValue"/>
+          <value name="refDefinition">com.softwareag.police.data.pub.docs:ForceDetail</value>
+          <value name="definitionName">ForceDetail</value>
+          <Boolean name="includeInRad">false</Boolean>
+        </record>
+      </record>
+    </record>
+    <record name="/getForceDetail_GET_$response" javaclass="com.wm.util.Values">
+      <value name="name">getForceDetail_GET_response</value>
+      <value name="nsName">/getForceDetail_GET_$response</value>
+      <Boolean name="autoGenerated">true</Boolean>
+      <Boolean name="recursive">false</Boolean>
+      <null name="description"/>
+      <record name="parameters" javaclass="com.wm.util.Values">
+        <record name="forceDetail" javaclass="com.wm.util.Values">
+          <value name="name">forceDetail</value>
+          <value name="source">BODY</value>
+          <value name="type">REFERENCE</value>
+          <value name="description">Detail of force</value>
+          <Boolean name="isRequired">true</Boolean>
+          <Boolean name="isArray">false</Boolean>
+          <null name="defaultValue"/>
+          <value name="refDefinition">com.softwareag.police.data.pub.docs:ForceDetail</value>
+          <value name="definitionName">ForceDetail</value>
+          <Boolean name="includeInRad">false</Boolean>
+        </record>
+      </record>
+    </record>
+    <record name="/addNumbers_GET_$response" javaclass="com.wm.util.Values">
+      <value name="name">addNumbers_GET_response</value>
+      <value name="nsName">/addNumbers_GET_$response</value>
+      <Boolean name="autoGenerated">true</Boolean>
+      <Boolean name="recursive">false</Boolean>
+      <null name="description"/>
+      <record name="parameters" javaclass="com.wm.util.Values">
+        <record name="result" javaclass="com.wm.util.Values">
+          <value name="name">result</value>
+          <value name="source">FORMDATA</value>
+          <value name="type">STRING</value>
+          <value name="description"></value>
+          <Boolean name="isRequired">true</Boolean>
+          <Boolean name="isArray">false</Boolean>
+          <null name="defaultValue"/>
+          <null name="refDefinition"/>
+          <null name="definitionName"/>
+          <Boolean name="includeInRad">true</Boolean>
+        </record>
+      </record>
+    </record>
+  </record>
+  <null name="radSource"/>
+  <value name="radVersion">1.0</value>
+  <array name="generatedDoctypes" type="record" depth="1">
+  </array>
+  <array name="generatedServices" type="record" depth="1">
+  </array>
+  <array name="generatedRestResources" type="record" depth="1">
+  </array>
+  <array name="resourceNodeNSNames" type="value" depth="1">
+    <value>com.softwareag.police.data.pub:rst</value>
+  </array>
+</Values>

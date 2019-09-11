@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<IDataXMLCoder version="1.0">
+  <record javaclass="com.wm.data.ISMemDataImpl">
+    <record name="detailResponse" javaclass="com.wm.data.ISMemDataImpl">
+      <value name="description">description</value>
+      <value name="url">url</value>
+      <value name="telephone">telephone</value>
+      <value name="id">id</value>
+      <value name="name">name</value>
+    </record>
+  </record>
+</IDataXMLCoder>

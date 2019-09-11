@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    build: .
+    image: pembo/jenkins_plus_ant
+    ports:
+     - "8081:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home      
+    
+volumes:
+  jenkins_home:
+    external: true 

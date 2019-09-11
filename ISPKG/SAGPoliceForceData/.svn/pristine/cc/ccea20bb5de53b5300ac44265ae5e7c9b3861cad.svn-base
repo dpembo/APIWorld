@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<IDataXMLCoder version="1.0">
+  <record javaclass="com.wm.data.ISMemDataImpl">
+    <value name="fileName">mock-forcesList.xml</value>
+    <array name="forcesDetail" type="record" depth="1">
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">avon-and-somerset</value>
+        <value name="name">Avon and Somerset Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">bedfordshire</value>
+        <value name="name">Bedfordshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">cambridgeshire</value>
+        <value name="name">Cambridgeshire Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">cheshire</value>
+        <value name="name">Cheshire Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">city-of-london</value>
+        <value name="name">City of London Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">cleveland</value>
+        <value name="name">Cleveland Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">cumbria</value>
+        <value name="name">Cumbria Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">derbyshire</value>
+        <value name="name">Derbyshire Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">devon-and-cornwall</value>
+        <value name="name">Devon &amp; Cornwall Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">dorset</value>
+        <value name="name">Dorset Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">durham</value>
+        <value name="name">Durham Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">dyfed-powys</value>
+        <value name="name">Dyfed-Powys Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">essex</value>
+        <value name="name">Essex Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">gloucestershire</value>
+        <value name="name">Gloucestershire Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">greater-manchester</value>
+        <value name="name">Greater Manchester Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">gwent</value>
+        <value name="name">Gwent Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">hampshire</value>
+        <value name="name">Hampshire Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">hertfordshire</value>
+        <value name="name">Hertfordshire Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">humberside</value>
+        <value name="name">Humberside Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">kent</value>
+        <value name="name">Kent Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">lancashire</value>
+        <value name="name">Lancashire Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">leicestershire</value>
+        <value name="name">Leicestershire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">lincolnshire</value>
+        <value name="name">Lincolnshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">merseyside</value>
+        <value name="name">Merseyside Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">metropolitan</value>
+        <value name="name">Metropolitan Police Service</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">norfolk</value>
+        <value name="name">Norfolk Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">north-wales</value>
+        <value name="name">North Wales Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">north-yorkshire</value>
+        <value name="name">North Yorkshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">northamptonshire</value>
+        <value name="name">Northamptonshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">northumbria</value>
+        <value name="name">Northumbria Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">nottinghamshire</value>
+        <value name="name">Nottinghamshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">northern-ireland</value>
+        <value name="name">Police Service of Northern Ireland</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">south-wales</value>
+        <value name="name">South Wales Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">south-yorkshire</value>
+        <value name="name">South Yorkshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">staffordshire</value>
+        <value name="name">Staffordshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">suffolk</value>
+        <value name="name">Suffolk Constabulary</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">surrey</value>
+        <value name="name">Surrey Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">sussex</value>
+        <value name="name">Sussex Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">thames-valley</value>
+        <value name="name">Thames Valley Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">warwickshire</value>
+        <value name="name">Warwickshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">west-mercia</value>
+        <value name="name">West Mercia Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">west-midlands</value>
+        <value name="name">West Midlands Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">west-yorkshire</value>
+        <value name="name">West Yorkshire Police</value>
+      </record>
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="id">wiltshire</value>
+        <value name="name">Wiltshire Police</value>
+      </record>
+    </array>
+  </record>
+</IDataXMLCoder>
