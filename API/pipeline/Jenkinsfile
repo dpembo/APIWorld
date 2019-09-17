@@ -1,0 +1,50 @@
+// target_node id of the slave node
+node ('master'){
+
+	def microservices = ["order-service", "product-service"]
+	def version = "0.0.1"
+
+	stage('Build the Microservices'){
+	    sh '''
+		  cd /work/spring-boot/
+		  docker run --rm --name service-maven -v "$PWD":/usr/share/mymaven -v "$HOME/.m2":/root/.m2 -v "$PWD"/target:/usr/share/mymaven/target -w /usr/share/mymaven maven:3.6-jdk-8 mvn package
+		'''
+	}
+	
+	stage('Prepare the Microservices image') {
+	  for (microservice in microservices) {
+			def zipname = "$microservice/target/$microservice-${version}.jar"
+			withEnv(["ms=$microservice","zn=${zipname}"]) {
+				sh '''
+				  cd /work/spring-boot/
+				  docker build -t $ms --build-arg PORT=8080 --build-arg JAR_FILE=$zn .
+				'''
+		  }
+	  }
+	}
+	
+	stage('Prepare the Microgateway images') {
+	  for (microservice in microservices) {
+			def archivename = "$microservice/gateway/$microservice.zip"
+			def sidecarname = "$microservice-sidecar"
+			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}"]) {
+				sh '''
+				  cd /work/Microgateway/
+				  microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive
+				  docker build -t $scname -f Microgateway_DockerFile .
+				'''
+		  }
+	  }
+	}
+	
+	
+	stage('Push the Native service image to the docker registry') {
+		withEnv(javaEnv) {
+			 sh ''' echo tagging the image apigateway-qa-jersey
+             sudo -u user docker login https://daerepository03.eur.ad.sag:4443 -u qedbuser -p monjan29    
+             sudo -u user docker tag apigateway-qa-jersey daerepository03.eur.ad.sag:4443/api-management/apigateway-tests-nativeservices-jersey
+             sudo -u user docker push daerepository03.eur.ad.sag:4443/api-management/apigateway-tests-nativeservices-jersey
+             '''
+		}
+   }
+}

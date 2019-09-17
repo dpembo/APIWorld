@@ -1,0 +1,59 @@
+#
+# Input file to create a Kubernetes deployment with a Microgateway
+# Docker image including health checks
+#
+# Prerequisites:
+#   1. Create Microgateway Docker Image
+#   2. Push Microgateway Docker image to Docker registry
+#   3. Create Native Service Docker Image
+#   4. Push Native Service Docker image to Docker registry
+#
+# Execute to create a Kubernetes deployment:
+#
+#   kubectl create -f yml.yml
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: gateway
+        image: test:test
+        ports:
+        - containerPort: 9090       # must match the exposed port of the microgateway docker image
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - /opt/softwareag/Microgateway/files/k8s-lifenesscheck.sh
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - /opt/softwareag/Microgateway/files/k8s-readinesscheck.sh
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      - name: sdc
+        image: order-service
