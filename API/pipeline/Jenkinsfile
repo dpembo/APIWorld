@@ -5,19 +5,6 @@ node ('master'){
 	def version = "0.0.1"
 	def microservices_root = "apiworld/API/spring-boot"
 	def microgateway_root = "/work/Microgateway"
-	
-	
-	stage('clean up') {
-	  for (microservice in microservices) {
-	    def sidecarname = "$microservice-sidecar"
-		withEnv(["ms=$microservice","scName=${sidecarname}"]) {
-			sh '''
-			 docker rmi $scName
-			 docker rmi $ms
-			'''
-		}
-	  }
-	}
 
 	stage('Build the Microservices'){
 		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apiworld']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Git', url: 'https://github.com/dpembo/APIWorld']]])
