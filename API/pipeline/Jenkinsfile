@@ -3,12 +3,14 @@ node ('master'){
 
 	def microservices = ["order-service", "product-service"]
 	def version = "0.0.1"
-	def microservices_root = "/work/spring-boot/"
+	def microservices_root = "apiworld/API/spring-boot/"
 	def microgateway_root = "/work/Microgateway/"
 
 	stage('Build the Microservices'){
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apiworld']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Git', url: 'https://github.com/dpembo/APIWorld']]])
+
 	    sh '''
-		  cd /work/spring-boot/
+		  cd 
 		  docker run --rm --name service-maven -v "$PWD":/usr/share/mymaven -v "$HOME/.m2":/root/.m2 -v "$PWD"/target:/usr/share/mymaven/target -w /usr/share/mymaven maven:3.6-jdk-8 mvn package
 		'''
 	}
@@ -27,7 +29,7 @@ node ('master'){
 	
 	stage('Prepare the Microgateway images') {
 	  for (microservice in microservices) {
-			def archivename = "$microservice/gateway/$microservice.zip"
+			def archivename = "${workspace}/${microservices_root}/$microservice/gateway/$microservice.zip"
 			def sidecarname = "$microservice-sidecar"
 			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}"]) {
 				sh '''
