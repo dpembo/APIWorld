@@ -3,8 +3,8 @@ node ('master'){
 
 	def microservices = ["order-service", "product-service"]
 	def version = "0.0.1"
-	def microservices_root = "apiworld/API/spring-boot/"
-	def microgateway_root = "/work/Microgateway/"
+	def microservices_root = "apiworld/API/spring-boot"
+	def microgateway_root = "/work/Microgateway"
 
 	stage('Build the Microservices'){
 		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apiworld']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Git', url: 'https://github.com/dpembo/APIWorld']]])
@@ -36,7 +36,7 @@ node ('master'){
 			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}"]) {
 				sh '''
 				  cd $mgw_root
-				  microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive
+				  ./microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive
 				  docker build -t $scname -f Microgateway_DockerFile .
 				'''
 		  }
