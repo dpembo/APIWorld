@@ -5,6 +5,19 @@ node ('master'){
 	def version = "0.0.1"
 	def microservices_root = "apiworld/API/spring-boot"
 	def microgateway_root = "/work/Microgateway"
+	
+	
+	stage('clean up') {
+	  for (microservice in microservices) {
+	    def sidecarname = "$microservice-sidecar"
+		withEnv(["ms=$microservice","scName=${sidecarname}"]) {
+			sh '''
+			 docker rmi $scName
+			 docker rmi $ms
+			'''
+		}
+	  }
+	}
 
 	stage('Build the Microservices'){
 		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apiworld']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Git', url: 'https://github.com/dpembo/APIWorld']]])
@@ -32,27 +45,13 @@ node ('master'){
 	stage('Prepare the Microgateway images') {
 	  for (microservice in microservices) {
 			def archivename = "${workspace}/${microservices_root}/$microservice/gateway/${microservice}.zip"
+			def aliasesfile = "${workspace}/${microservices_root}/$microservice/gateway/aliases.yml"
 			def sidecarname = "$microservice-sidecar"
-			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}"]) {
+			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}","al_file=${aliasesfile}"]) {
 				sh '''
 				  cd $mgw_root
-				  ./microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive -dof $ms
+				  ./microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive -dof $ms -c $al_file
 				  docker build -t $scname -f $ms .
-				'''
-		  }
-	  }
-	}
-	
-	
-	stage('Push the MicroService+Microgateway images to the repository') {
-	 for (microservice in microservices) {
-			def archivename = "$microservice/gateway/$microservice.zip"
-			def sidecarname = "$microservice-sidecar"
-			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}"]) {
-				sh '''
-				docker login
-				docker tag 
-				docker push 
 				'''
 		  }
 	  }
