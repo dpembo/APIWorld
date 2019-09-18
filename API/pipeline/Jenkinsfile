@@ -3,6 +3,8 @@ node ('master'){
 
 	def microservices = ["order-service", "product-service"]
 	def version = "0.0.1"
+	def microservices_root = "/work/spring-boot/"
+	def microgateway_root = "/work/Microgateway/"
 
 	stage('Build the Microservices'){
 	    sh '''
@@ -11,12 +13,12 @@ node ('master'){
 		'''
 	}
 	
-	stage('Prepare the Microservices image') {
+	stage('Prepare the Microservices images') {
 	  for (microservice in microservices) {
 			def zipname = "$microservice/target/$microservice-${version}.jar"
-			withEnv(["ms=$microservice","zn=${zipname}"]) {
+			withEnv(["ms=$microservice","zn=${zipname}","ms_root=${microservices_root}"]) {
 				sh '''
-				  cd /work/spring-boot/
+				  cd $ms_root
 				  docker build -t $ms --build-arg PORT=8080 --build-arg JAR_FILE=$zn .
 				'''
 		  }
@@ -27,9 +29,9 @@ node ('master'){
 	  for (microservice in microservices) {
 			def archivename = "$microservice/gateway/$microservice.zip"
 			def sidecarname = "$microservice-sidecar"
-			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}"]) {
+			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}"]) {
 				sh '''
-				  cd /work/Microgateway/
+				  cd $mgw_root
 				  microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive
 				  docker build -t $scname -f Microgateway_DockerFile .
 				'''
@@ -38,13 +40,17 @@ node ('master'){
 	}
 	
 	
-	stage('Push the Native service image to the docker registry') {
-		withEnv(javaEnv) {
-			 sh ''' echo tagging the image apigateway-qa-jersey
-             sudo -u user docker login https://daerepository03.eur.ad.sag:4443 -u qedbuser -p monjan29    
-             sudo -u user docker tag apigateway-qa-jersey daerepository03.eur.ad.sag:4443/api-management/apigateway-tests-nativeservices-jersey
-             sudo -u user docker push daerepository03.eur.ad.sag:4443/api-management/apigateway-tests-nativeservices-jersey
-             '''
-		}
-   }
+	stage('Push the MicroService+Microgateway images to the repository') {
+	 for (microservice in microservices) {
+			def archivename = "$microservice/gateway/$microservice.zip"
+			def sidecarname = "$microservice-sidecar"
+			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}"]) {
+				sh '''
+				docker login
+				docker tag 
+				docker push 
+				'''
+		  }
+	  }
+	}
 }
