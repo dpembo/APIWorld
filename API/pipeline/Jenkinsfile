@@ -31,7 +31,7 @@ node ('master'){
 	
 	stage('Prepare the Microgateway images') {
 	  for (microservice in microservices) {
-			def archivename = "${workspace}/${microservices_root}/$microservice/gateway/$microservice.zip"
+			def archivename = "${workspace}/${microservices_root}/$microservice/gateway/${microservice}.zip"
 			def sidecarname = "$microservice-sidecar"
 			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}"]) {
 				sh '''
