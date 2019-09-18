@@ -36,8 +36,8 @@ node ('master'){
 			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}"]) {
 				sh '''
 				  cd $mgw_root
-				  ./microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive
-				  docker build -t $scname -f Microgateway_DockerFile .
+				  ./microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive -dof $ms
+				  docker build -t $scname -f $ms .
 				'''
 		  }
 	  }
