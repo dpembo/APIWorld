@@ -5,7 +5,8 @@ node ('master'){
 	def version = "0.0.1"
 	def microservices_root = "apiworld/API/spring-boot"
 	def microgateway_root = "/work/Microgateway"
-
+	def repositoryName = "madhavan/"
+	
 	stage('Build the Microservices'){
 		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apiworld']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Git', url: 'https://github.com/dpembo/APIWorld']]])
 		
@@ -20,7 +21,8 @@ node ('master'){
 	stage('Prepare the Microservices images') {
 	  for (microservice in microservices) {
 			def zipname = "$microservice/target/$microservice-${version}.jar"
-			withEnv(["ms=$microservice","zn=${zipname}","ms_root=${microservices_root}"]) {
+			def tagname = "${repositoryName}$microservice"
+			withEnv(["ms=${tagname}","zn=${zipname}","ms_root=${microservices_root}"]) {
 				sh '''
 				  cd $ms_root
 				  docker build -t $ms --build-arg PORT=8080 --build-arg JAR_FILE=$zn .
@@ -33,7 +35,7 @@ node ('master'){
 	  for (microservice in microservices) {
 			def archivename = "${workspace}/${microservices_root}/$microservice/gateway/${microservice}.zip"
 			def aliasesfile = "${workspace}/${microservices_root}/$microservice/gateway/aliases.yml"
-			def sidecarname = "$microservice-sidecar"
+			def sidecarname = "${repositoryName}$microservice-sidecar"
 			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}","al_file=${aliasesfile}"]) {
 				sh '''
 				  cd $mgw_root
@@ -43,4 +45,19 @@ node ('master'){
 		  }
 	  }
 	}
+	
+	stage('Push the Microgateway and the sidecar images to Docker repository) {
+	  for (microservice in microservices) {
+		def tagname = "${repositoryName}$microservice"
+		def sidecarname = "${tagname}-sidecar"
+		withEnv(["mstagname=${tagname}","sidecar=${sidecarname}"]) {
+			sh '''
+			  docker login
+			  docker push $mstagname
+			  docker push $sidecar
+			'''
+		}
+	  }
+	}
+	
 }
