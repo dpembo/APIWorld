@@ -52,7 +52,6 @@ node ('master'){
 		def sidecarname = "${tagname}-sidecar"
 		withEnv(["mstagname=${tagname}","sidecar=${sidecarname}"]) {
 			sh '''
-			  docker login
 			  docker push $mstagname
 			  docker push $sidecar
 			'''
