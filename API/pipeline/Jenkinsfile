@@ -76,7 +76,7 @@ node ('master'){
 			  docker push $sidecar
 			'''
 		}
-	  }*/
-	}
+	  }
+	}*/
 	
 }
