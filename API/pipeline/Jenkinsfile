@@ -7,6 +7,26 @@ node ('master'){
 	def microgateway_root = "/work/Microgateway"
 	def repositoryName = "madhavan/"
 	
+	stage('Clean up images') {
+	 for (microservice in microservices) {
+ 		def tagname = "${repositoryName}$microservice"
+		def sidecarname = "${tagname}-sidecar"
+		withEnv(["mstagname=${tagname}","sidecar=${sidecarname}"]) {
+			sh '''
+    			for id in `docker images -q $mstagname`;
+				do
+					docker rmi --force $id
+				done
+				
+				for id in `docker images -q $sidecar`;
+				do
+					docker rmi --force $id
+				done
+			'''
+		}
+	 }
+	}
+	
 	stage('Build the Microservices'){
 		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apiworld']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Git', url: 'https://github.com/dpembo/APIWorld']]])
 		
@@ -52,8 +72,8 @@ node ('master'){
 		def sidecarname = "${tagname}-sidecar"
 		withEnv(["mstagname=${tagname}","sidecar=${sidecarname}"]) {
 			sh '''
-			  docker push $mstagname
-			  docker push $sidecar
+			  //docker push $mstagname
+			  //docker push $sidecar
 			'''
 		}
 	  }
