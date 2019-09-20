@@ -46,7 +46,7 @@ node ('master'){
 	  }
 	}
 	
-	stage('Push the Microgateway and the sidecar images to Docker repository) {
+	stage('Push the Microgateway and the sidecar images to Docker repository') {
 	  for (microservice in microservices) {
 		def tagname = "${repositoryName}$microservice"
 		def sidecarname = "${tagname}-sidecar"
