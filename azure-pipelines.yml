@@ -26,4 +26,9 @@ steps:
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    sonarQubeRunAnalysis: true
+
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: '**/API/spring-boot/Dockerfile'
