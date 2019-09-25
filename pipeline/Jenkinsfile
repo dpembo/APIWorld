@@ -1,0 +1,82 @@
+// target_node id of the slave node
+node ('master'){
+
+	def microservices = ["order-service", "product-service"]
+	def version = "0.0.1"
+	def microservices_root = "apiworld/API/spring-boot"
+	def microgateway_root = "/work/Microgateway"
+	def repositoryName = "madhavan/"
+	
+	stage('Clean up images') {
+	 for (microservice in microservices) {
+ 		def tagname = "${repositoryName}$microservice"
+		def sidecarname = "${tagname}-sidecar"
+		withEnv(["mstagname=${tagname}","sidecar=${sidecarname}"]) {
+			sh '''
+    			for id in `docker images -q $mstagname`;
+				do
+					docker rmi --force $id
+				done
+				
+				for id in `docker images -q $sidecar`;
+				do
+					docker rmi --force $id
+				done
+			'''
+		}
+	 }
+	}
+	
+	stage('Build the Microservices'){
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'apiworld']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Git', url: 'https://github.com/dpembo/APIWorld']]])
+		
+		withEnv(["ms_root=${workspace}/${microservices_root}"]) {
+			sh '''
+			  cd $ms_root
+			  docker run --rm --name service-maven -v "$PWD":/usr/share/mymaven -v "$HOME/.m2":/root/.m2 -v "$PWD"/target:/usr/share/mymaven/target -w /usr/share/mymaven maven:3.6-jdk-8 mvn package
+			'''
+		}
+	}
+	
+	stage('Prepare the Microservices images') {
+	  for (microservice in microservices) {
+			def zipname = "$microservice/target/$microservice-${version}.jar"
+			def tagname = "${repositoryName}$microservice"
+			withEnv(["ms=${tagname}","zn=${zipname}","ms_root=${microservices_root}"]) {
+				sh '''
+				  cd $ms_root
+				  docker build -t $ms --build-arg PORT=8080 --build-arg JAR_FILE=$zn .
+				'''
+		  }
+	  }
+	}
+	
+	stage('Prepare the Microgateway images') {
+	  for (microservice in microservices) {
+			def archivename = "${workspace}/${microservices_root}/$microservice/gateway/${microservice}.zip"
+			def aliasesfile = "${workspace}/${microservices_root}/$microservice/gateway/aliases.yml"
+			def sidecarname = "${repositoryName}$microservice-sidecar"
+			withEnv(["ms=$microservice","archive=${archivename}","scname=${sidecarname}","mgw_root=${microgateway_root}","al_file=${aliasesfile}"]) {
+				sh '''
+				  cd $mgw_root
+				  ./microgateway.sh createDockerFile --docker_dir . -p 9090 -a $archive -dof $ms -c $al_file
+				  docker build -t $scname -f $ms .
+				'''
+		  }
+	  }
+	}
+	
+	/*stage('Push the Microgateway and the sidecar images to Docker repository') {
+	  for (microservice in microservices) {
+		def tagname = "${repositoryName}$microservice"
+		def sidecarname = "${tagname}-sidecar"
+		withEnv(["mstagname=${tagname}","sidecar=${sidecarname}"]) {
+			sh '''
+			  docker push $mstagname
+			  docker push $sidecar
+			'''
+		}
+	  }
+	}*/
+	
+}
