@@ -20,7 +20,7 @@ steps:
 
 - task: Maven@3
   inputs:
-    mavenPomFile: '/API/spring-boot/pom.xml'
+    mavenPomFile: 'API/spring-boot/pom.xml'
     publishJUnitResults: false
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
