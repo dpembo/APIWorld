@@ -3,7 +3,7 @@ node ('master'){
 
 	def microservices = ["order-service", "product-service"]
 	def version = "0.0.1"
-	def microservices_root = "apiworld/API/spring-boot"
+	def microservices_root = "apiworld/spring-boot"
 	def microgateway_root = "/work/Microgateway"
 	def repositoryName = "madhavan/"
 	
