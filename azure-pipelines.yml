@@ -31,4 +31,5 @@ steps:
 - task: Docker@2
   inputs:
     command: 'build'
-    Dockerfile: '**/API/spring-boot/Dockerfile'
+    Dockerfile: 'API/spring-boot/Dockerfile'
+
